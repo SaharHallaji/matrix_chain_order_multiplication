@@ -1,6 +1,3 @@
-// Javascript code to implement the
-// matrix chain multiplication using recursion
-
 function matrixChainOrder(p , i , j)
 {
     if (i === j)
@@ -9,11 +6,6 @@ function matrixChainOrder(p , i , j)
     let min = Number.MAX_VALUE;
     let parentheses;
 
-    // Place parenthesis at different places
-    // between first and last matrix,
-    // recursively calculate count of multiplications
-    // for each parenthesis placement
-    // and return the minimum count
     for (let k = i; k < j; k++)
     {
         const left = matrixChainOrder(p, i, k);
@@ -26,11 +18,9 @@ function matrixChainOrder(p , i , j)
         }
     }
 
-    // Return minimum count and optimal parentheses
     return { minMultiplications: min, parentheses };
 }
 
-// Driver code
 const arr = [10, 5, 7, 20, 8];
 const N = arr.length;
 

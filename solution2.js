@@ -1,34 +1,26 @@
-function matrixChainMultiplication(p) {
-    const n = p.length - 1;
-    const dp = Array.from({ length: n }, () => Array(n).fill({ cost: Infinity, split: null }));
-
-    for (let i = 1; i < n; i++) dp[i][i] = { cost: 0, split: null };
-
-    for (let l = 2; l < n; l++) {
-        for (let i = 1; i < n - l + 1; i++) {
-            const j = i + l - 1;
-            for (let k = i; k < j; k++) {
-                const cost = dp[i][k].cost + dp[k + 1][j].cost + p[i - 1] * p[k] * p[j];
-                if (cost < dp[i][j].cost) {
-                    dp[i][j] = { cost, split: k };
+function matrixChainOrder(dims) {
+    const n = dims.length - 1;
+    const m = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0)); // Minimum number of multiplications
+    let parentheses;
+    for (let len = 2; len <= n; len++) { // Subsequence lengths
+        for (let i = 1; i <= n - len + 1; i++) {
+            const j = i + len - 1;
+            m[i][j] = Infinity;
+            for (let k = i; k <= j - 1; k++) {
+                const cost = m[i][k] + m[k + 1][j] + dims[i - 1] * dims[k] * dims[j];
+                if (cost < m[i][j]) {
+                    parentheses =  `(${dims[i-1]} * ${dims[j]} * ${dims[k]} )`;
+                    m[i][j] = cost;
                 }
+                console.log(`m[${i}][${j}] -> ${parentheses}`);
             }
         }
     }
 
-    const buildParenthesization = (i, j) => {
-        if (i === j) return `A${i}`;
-        const k = dp[i][j].split;
-        return (`${buildParenthesization(i, k)} * ${buildParenthesization(k + 1, j)}`);
-    };
-
-    return {
-        minimumMultiplications: dp[1][n - 1].cost,
-        optimalParenthesization: buildParenthesization(1, n - 1),
-    };
+    return { m };
 }
 
-const p = [1, 2, 3, 4, 3];
-const result = matrixChainMultiplication(p);
-console.log("Minimum multiplications:", result.minimumMultiplications);
-console.log("Optimal parenthesization:", result.optimalParenthesization);
+// Example usage
+const dims = [10, 5, 7, 20, 8];
+const { m, s } = matrixChainOrder(dims);
+console.log("m matrix:", m);
