@@ -1,0 +1,15 @@
+{
+  "name": "matrix_chain_order_multiplication",
+  "version": "1.0.0",
+  "description": "university project",
+  "main": "solution1.js",
+  "scripts": {
+    "start1": "node solution1.js",
+    "start2": "node solution2.js"
+  },
+  "author": "Sahar Hallaji",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.30.1"
+  }
+}
